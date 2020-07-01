@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Validation from './Validation/Validation';
+import Char from './Char/Char'
 
 const App = (props) => {
   const [personsState, setPersonsState] = useState({
@@ -12,7 +14,7 @@ const App = (props) => {
   });
 
   const [otherState, setOtherState] = useState('some other value');
-  const [showPersonsState, setShowPersonsState] = useState(true);
+  const [showPersonsState, setShowPersonsState] = useState(false);
 
   console.log(personsState, otherState);
 
@@ -59,7 +61,8 @@ const App = (props) => {
   };
 
   const style = {
-    backgroundColor: 'white',
+    backgroundColor: 'green',
+    color: 'white',
     font: 'inherit',
     border: '1px solid blue',
     padding: '8px',
@@ -96,16 +99,64 @@ const App = (props) => {
           age={personsState.persons[2].age} /> */}
       </div>
     );
+
+    style.backgroundColor = 'red';
   }
+
+  const classes = [];
+  if (personsState.persons.length <= 2) {
+    classes.push('red');
+  }
+  if (personsState.persons.length <= 1) {
+    classes.push('bold');
+  }
+
+  const [userInputState, setUserInputState] = useState({
+    userInput: ''
+  });
+
+  const inputChangeHandler = (event) => {
+    setUserInputState({userInput: event.target.value });
+  }
+
+  let assignmentUserInput = (
+    <div>
+      <input 
+        type="text"
+        onChange={inputChangeHandler}
+        value={userInputState.userInput} />
+       <p>Input length: {userInputState.userInput.length}</p>
+    </div>
+  );
+
+  const deleteCharHandler = (index) => {
+    const text = userInputState.userInput.split('');
+    text.splice(index, 1);
+    const updatedText = text.join('');
+    setUserInputState({userInput: updatedText});
+  };
+
+  const charList = userInputState.userInput.split('').map((char, index) => {
+    return <Char 
+      character={char} 
+      key={index}
+      clicked={() => deleteCharHandler(index)} />;
+  });
+
 
   return (
     <div className="App">
       <h1>Hi, I'm a React App</h1>
-      <p>This is really working!</p>
+      <p className={classes.join(' ')}>This is really working!</p>
+
       <button
         style={style}
         onClick={togglePersonsHandler}>Toggle Persons</button>
       {persons}
+
+      {assignmentUserInput}
+      <Validation inputLength={userInputState.userInput.length}/>
+      {charList}
     </div>
   );
 }
