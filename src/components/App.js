@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import './App.css';
-import Person from './Person/Person';
+import Person from './Persons/Person/Person';
 import Validation from './Validation/Validation';
 import Char from './Char/Char';
 //import Radium, {StyleRoot} from 'radium';
@@ -174,13 +174,12 @@ const App = (props) => {
       <h1>Hi, I'm a React App</h1>
       <p className={classes.join(' ')}>This is really working!</p>
 
-      {/* <StyledButton></StyledButton> */}
       {/* style={style} */}
-      <button
+      <StyledButton
         onClick={togglePersonsHandler}
         alt={showPersonsState}>
         Toggle Persons
-      </button>  
+      </StyledButton>  
       {persons}
 
       {assignmentUserInput}
