@@ -1,8 +1,24 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import './App.css';
 import Person from './Person/Person';
 import Validation from './Validation/Validation';
-import Char from './Char/Char'
+import Char from './Char/Char';
+//import Radium, {StyleRoot} from 'radium';
+
+const StyledButton = styled.button`
+    background-color: ${props => props.alt ? 'red' : 'green'};
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+      color: black;
+    }
+`;
 
 const App = (props) => {
   const [personsState, setPersonsState] = useState({
@@ -66,7 +82,11 @@ const App = (props) => {
     font: 'inherit',
     border: '1px solid blue',
     padding: '8px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: 'lightgreen',
+      color: 'black'
+    }
   };
 
   const togglePersonsHandler = () => {
@@ -100,7 +120,11 @@ const App = (props) => {
       </div>
     );
 
-    style.backgroundColor = 'red';
+    // style.backgroundColor = 'red';
+    // style[':hover'] = {
+    //   backgroundColor: 'salmon',
+    //   color: 'black'
+    // };
   }
 
   const classes = [];
@@ -145,13 +169,18 @@ const App = (props) => {
 
 
   return (
+    //</StyleRoot><StyleRoot>
     <div className="App">
       <h1>Hi, I'm a React App</h1>
       <p className={classes.join(' ')}>This is really working!</p>
 
+      {/* <StyledButton></StyledButton> */}
+      {/* style={style} */}
       <button
-        style={style}
-        onClick={togglePersonsHandler}>Toggle Persons</button>
+        onClick={togglePersonsHandler}
+        alt={showPersonsState}>
+        Toggle Persons
+      </button>  
       {persons}
 
       {assignmentUserInput}
